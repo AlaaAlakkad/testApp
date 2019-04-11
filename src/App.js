@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
+import Clock from './TestApp';
+import newInput from './InputAction';
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.onNewInput= this.onNewInput.bind(this);
+  }
+  onNewInput(e){
+    this.props.onNewInput(e.target.value)
+  }
   render() {
+    console.log(this.props);
     return (
       <div className="App">
         <header className="App-header">
@@ -19,10 +30,18 @@ class App extends Component {
           >
             Learn React
           </a>
+          <Clock/>
+          <input onChange={this.onNewInput}></input>
+          <div>{this.props.clock}</div>
         </header>
       </div>
     );
   }
 }
-
-export default App;
+const mapStateToProps = (state) =>{
+  return state;
+}
+const mapDispatchToProps = {
+  onNewInput: newInput
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
